@@ -1,0 +1,1 @@
+Lab topology currently consists of an nms running ansilbe and one SRX
