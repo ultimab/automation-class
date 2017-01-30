@@ -1,0 +1,6 @@
+[junos]
+srx1.lab.local
+
+[all:vars]
+ansible_user=admin
+ansible_ssh_pass=inoclab1

@@ -1,0 +1,7 @@
+---
+- hosts: junos
+  gather_facts: no
+  tasks:
+  - raw: "show arp no-resolve"
+    register: show
+  - debug: var=show.stdout_lines
