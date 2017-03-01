@@ -1,14 +1,10 @@
 ---
 - name: "Gather facts using junos module"
   hosts: junos
-  connection: local
-  gather_facts: no
   
   tasks:
   
-  - junos_facts: 
-      host={{ inventory_hostname }}
-      username=admin
-      password=inoclab1
+  - junos_facts:
+      provider: "{{netconf}}"
     register: junos
   - debug: var=junos

@@ -1,0 +1,5 @@
+netconf:
+  username:  "admin"
+  password:  "inoclab1"
+  host:      "{{inventory_hostname}}"
+  transport: netconf
