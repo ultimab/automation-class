@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+
+  tasks:
+  - file: path=inventory_report.txt state=absent
+  - file: path=inventory_report.txt state=touch
+
+- name: "Gather facts using junos module"
+  hosts: junos
+  connection: local
+  tasks:
+  
+  - junos_facts:
+      provider: "{{netconf}}"
+    register: junos
+  - lineinfile:
+      dest: inventory_report.txt
+      line: "[{{inventory_hostname}}] 
+			\n Model: {{junos.ansible_facts.model}}
+			\n Version: {{junos.ansible_facts.version}}
+			\n SN: {{junos.ansible_facts.serialnumber}}"

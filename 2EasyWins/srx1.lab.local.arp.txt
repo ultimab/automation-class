@@ -1,0 +1,4 @@
+MAC Address       Address         Interface     Flags
+52:54:00:12:35:02 10.0.2.2        ge-0/0/0.0           none
+08:00:27:bd:f1:47 172.16.1.10     ge-0/0/1.0           none
+Total entries: 2

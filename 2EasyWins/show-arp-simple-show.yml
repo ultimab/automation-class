@@ -4,4 +4,6 @@
   tasks:
   - raw: "show arp no-resolve"
     register: show
-  - debug: var=show.stdout_lines
+  - local_action: >
+      copy content={{show.stdout}} 
+           dest=./{{inventory_hostname}}.arp.txt

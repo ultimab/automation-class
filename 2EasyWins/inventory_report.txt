@@ -1,0 +1,4 @@
+[srx1.lab.local] 
+ Model: FIREFLY-PERIMETER 
+ Version: 12.1X47-D20.7 
+ SN: d1c87ed6421b

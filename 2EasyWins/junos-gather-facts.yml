@@ -1,6 +1,7 @@
 ---
 - name: "Gather facts using junos module"
   hosts: junos
+  connection: local
   
   tasks:
   
