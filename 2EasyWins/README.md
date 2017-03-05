@@ -23,5 +23,4 @@ to a file
 playbook uses raw module to get arp table from junos device
 and write the output to a file
 
-
-
+There are also exmaple output files from playbook execution
