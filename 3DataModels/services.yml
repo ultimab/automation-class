@@ -1,0 +1,8 @@
+---
+ACME:
+  id: 1
+  ike_peer: 100.64.1.1
+  remote_net: "10.255.255.0/24"
+  ike_settings: G2-SHA1-AES256-PROPOSAL
+  ipesec_settings: ESP-SHA1-AES256-PROPOSAL
+  psk: super_secret

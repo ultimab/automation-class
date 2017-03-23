@@ -1,0 +1,49 @@
+security {
+    ike {
+        policy {{ service_name }} {
+            mode main;
+            proposals {{ ike_settings }};
+            pre-shared-key ascii-text {{ psk }};
+        }
+        gateway {{ service_name }} {
+            ike-policy ADVA-ASR-IKE-POLICY;
+            address {{ ike_peer }};
+            external-interface ?????;
+            local-address ?????;
+            version v2-only;
+        }
+    }
+    ipsec {
+        policy {{ service_name }} {
+            proposals {{ ipsec_settings }};
+        }
+        vpn {{ service_name }} {
+            bind-interface st0.{{ id_of_service }};
+            ike {
+                gateway {{ service_name }};
+                ipsec-policy {{ service_name }};
+            }
+            establish-tunnels immediately;
+        }
+    }
+}
+interfaces {
+    st0 {
+        unit {{ id_of_service }} {
+            description {{ service_name }};
+            family inet {
+            }
+        }
+    }
+}
+routing-instances {
+    {{ service_name }} {
+        instance-type virtual-router;
+        interface ???????;
+        interface st0.{{ id_of_service }};
+        routing-options {
+            static {
+				route {{ remote_net }} next-hop st0.{{ id_of_service }}
+        }
+    }
+}
