@@ -3,4 +3,9 @@
   gather_facts: no
   connection: local
   tasks:
-  - debug: var=vars
+  - include_vars:
+      file: "services.yml"
+      name: service
+  - template: 
+      src: vpn-service.j2
+      dest: ./output.txt

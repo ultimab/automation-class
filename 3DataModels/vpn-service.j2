@@ -1,27 +1,28 @@
+{% for cust,vpn in service|dictsort %}
 security {
     ike {
-        policy {{ service_name }} {
+        policy {{ cust }} {
             mode main;
-            proposals {{ ike_settings }};
-            pre-shared-key ascii-text {{ psk }};
+            proposals {{ vpn.ike_settings }};
+            pre-shared-key ascii-text {{ vpn.psk }};
         }
-        gateway {{ service_name }} {
+        gateway {{ cust }} {
             ike-policy ADVA-ASR-IKE-POLICY;
-            address {{ ike_peer }};
+            address {{ vpn.ike_peer }};
             external-interface ?????;
             local-address ?????;
             version v2-only;
         }
     }
     ipsec {
-        policy {{ service_name }} {
-            proposals {{ ipsec_settings }};
+        policy {{ cust }} {
+            proposals {{ vpn.ipsec_settings }};
         }
-        vpn {{ service_name }} {
-            bind-interface st0.{{ id_of_service }};
+        vpn {{ cust }} {
+            bind-interface st0.{{ vpn.id }};
             ike {
-                gateway {{ service_name }};
-                ipsec-policy {{ service_name }};
+                gateway {{ cust }};
+                ipsec-policy {{ cust }};
             }
             establish-tunnels immediately;
         }
@@ -29,21 +30,22 @@ security {
 }
 interfaces {
     st0 {
-        unit {{ id_of_service }} {
-            description {{ service_name }};
+        unit {{ vpn.id }} {
+            description {{ cust }};
             family inet {
             }
         }
     }
 }
 routing-instances {
-    {{ service_name }} {
+    {{ cust }} {
         instance-type virtual-router;
         interface ???????;
-        interface st0.{{ id_of_service }};
+        interface st0.{{ vpn.id }};
         routing-options {
             static {
-				route {{ remote_net }} next-hop st0.{{ id_of_service }}
+                route {{ vpn.remote_net }} next-hop st0.{{ vpn.id }}
         }
     }
 }
+{% endfor %}
