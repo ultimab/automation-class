@@ -13,7 +13,7 @@ dictionary indexed by the 'name' of the particular service/customer)
 
 id - unique identifyer for the specific VPN service
 node - node that the VPN will be configured on
-remote_net - remote network VPN provides access to
+remote_nets - list of remote networks VPN provides access to
 local_net - 'local' network to be hosted off of the SRX
 ike_settings - IPSec phase 1 settings to be used
 ipsec_settings - IPSec phase 2 settings to be used
@@ -39,3 +39,12 @@ Holds node specific data, only one file currently, and the only data is
 the 'id' given to a node, which using business logic will help generate
 the loopback IP of the node and is used by the 'services.yml' to
 note which node the VPN service is terminated on.
+
+gen_config.yml
+
+Tests the template and services file to genereate config for all
+services that are described.
+
+config.txt
+
+Example output of gen_config.yml

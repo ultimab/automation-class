@@ -8,4 +8,4 @@
       name: service
   - template: 
       src: vpn-service.j2
-      dest: ./output.txt
+      dest: ./config.txt

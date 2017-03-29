@@ -1,0 +1,114 @@
+security {
+    ike {
+        policy ACME {
+            mode main;
+            proposals G2-SHA1-AES256-PROPOSAL;
+            pre-shared-key ascii-text super_secret;
+        }
+        gateway ACME {
+            ike-policy ADVA-ASR-IKE-POLICY;
+            address 100.64.1.1;
+            external-interface ge-0/0/0.0;
+        }
+    }
+    ipsec {
+        policy ACME {
+            proposals ESP-SHA1-AES256-PROPOSAL;
+        }
+        vpn ACME {
+            bind-interface st0.100;
+            ike {
+                gateway ACME;
+                ipsec-policy ACME;
+            }
+            establish-tunnels immediately;
+        }
+    }
+}
+interfaces {
+    st0 {
+        unit 100 {
+            description ACME;
+            family inet {
+            }
+        }
+    }
+    ge-0/0/1 {
+        unit 100 {
+            description ACME
+            family inet {
+                address 10.255.0.1/24
+            }
+         }
+     }
+}
+routing-instances {
+    ACME {
+        instance-type virtual-router;
+        interface ge-0/0/1.100;
+        interface st0.100;
+        routing-options {
+            static {
+                route 10.255.255.0/24 next-hop st0.100;
+                route 10.255.254.0/24 next-hop st0.100;
+            }
+         }
+     }
+}
+security {
+    ike {
+        policy SUPERCORP {
+            mode main;
+            proposals G2-SHA1-AES256-PROPOSAL;
+            pre-shared-key ascii-text super_secret;
+        }
+        gateway SUPERCORP {
+            ike-policy ADVA-ASR-IKE-POLICY;
+            address 100.64.5.255;
+            external-interface ge-0/0/0.0;
+        }
+    }
+    ipsec {
+        policy SUPERCORP {
+            proposals ESP-SHA1-AES256-PROPOSAL;
+        }
+        vpn SUPERCORP {
+            bind-interface st0.200;
+            ike {
+                gateway SUPERCORP;
+                ipsec-policy SUPERCORP;
+            }
+            establish-tunnels immediately;
+        }
+    }
+}
+interfaces {
+    st0 {
+        unit 200 {
+            description SUPERCORP;
+            family inet {
+            }
+        }
+    }
+    ge-0/0/1 {
+        unit 200 {
+            description SUPERCORP
+            family inet {
+                address 10.20.0.1/24
+            }
+         }
+     }
+}
+routing-instances {
+    SUPERCORP {
+        instance-type virtual-router;
+        interface ge-0/0/1.200;
+        interface st0.200;
+        routing-options {
+            static {
+                route 10.0.255.0/24 next-hop st0.200;
+                route 10.255.0.0/24 next-hop st0.200;
+            }
+         }
+     }
+}

@@ -3,8 +3,17 @@ ACME:
   id: 100
   node: srx1.lab.local
   ike_peer: 100.64.1.1
-  remote_net: "10.255.255.0/24"
+  remote_nets: ["10.255.255.0/24","10.255.254.0/24"]
   local_net: "10.255.0.1/24"
+  ike_settings: G2-SHA1-AES256-PROPOSAL
+  ipsec_settings: ESP-SHA1-AES256-PROPOSAL
+  psk: super_secret
+SUPERCORP:
+  id: 200
+  node: srx1.lab.local
+  ike_peer: 100.64.5.255
+  remote_nets: ["10.0.255.0/24","10.255.0.0/24"]
+  local_net: "10.20.0.1/24"
   ike_settings: G2-SHA1-AES256-PROPOSAL
   ipsec_settings: ESP-SHA1-AES256-PROPOSAL
   psk: super_secret

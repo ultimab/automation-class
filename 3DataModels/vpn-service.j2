@@ -9,9 +9,7 @@ security {
         gateway {{ cust }} {
             ike-policy ADVA-ASR-IKE-POLICY;
             address {{ vpn.ike_peer }};
-            external-interface ?????;
-            local-address ?????;
-            version v2-only;
+            external-interface ge-0/0/0.0;
         }
     }
     ipsec {
@@ -36,16 +34,27 @@ interfaces {
             }
         }
     }
+    ge-0/0/1 {
+        unit {{ vpn.id }} {
+            description {{ cust }}
+            family inet {
+                address {{ vpn.local_net }}
+            }
+         }
+     }
 }
 routing-instances {
     {{ cust }} {
         instance-type virtual-router;
-        interface ???????;
+        interface ge-0/0/1.{{ vpn.id }};
         interface st0.{{ vpn.id }};
         routing-options {
             static {
-                route {{ vpn.remote_net }} next-hop st0.{{ vpn.id }}
-        }
-    }
+{% for net in vpn.remote_nets %}
+                route {{ net }} next-hop st0.{{ vpn.id }};
+{% endfor %}
+            }
+         }
+     }
 }
 {% endfor %}
